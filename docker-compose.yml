@@ -1,0 +1,26 @@
+version: '3.5'
+
+services:
+  bitbucket:
+    container_name: bitbucket
+    image: atlassian/bitbucket-server
+    ports:
+      - 7990:7990
+      - 7999:7999
+    restart: always
+    volumes:
+      - /data/bitbucket:/var/atlassian/application-data/bitbucket/
+    environment:
+      SEARCH_ENABLED: "true"
+    networks:
+      atlbitbucket:
+        ipv4_address: 172.18.1.1
+
+networks:
+      atlbitbucket:
+        name: BitbucketNetwork
+        driver: bridge
+        ipam:
+          driver: default
+          config:
+            - subnet: 172.18.0.0/16
